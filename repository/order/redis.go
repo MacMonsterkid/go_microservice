@@ -83,7 +83,8 @@ func (r *RedisRepo) DeleteByID(ctx context.Context, id uint64) error {
 
 	if err := txn.SRem(ctx, "orders", key); err != nil {
 		txn.Discard()
-		return fmt.Errorf("failed to remove from orders set: %w", err)
+		return ErrNotExist
+		//return fmt.Errorf("failed to remove from orders set: %w", err)
 	}
 
 	if _, err := txn.Exec(ctx); err != nil {
